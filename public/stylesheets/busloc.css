@@ -1,0 +1,35 @@
+body {
+    background-color: #f8f8f8   ;
+}
+table.buslocs {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+table.calender {
+    font-family: arial, sans-serif;
+    border-radius: 5px;
+}
+table.calender td{
+    border-radius: 10px;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(1) {
+    background-color: #eee;
+}
+
+p.big{
+    font-size:30px;
+}
+p.plateNo{
+    font-size:5px;
+}
+table p {
+    margin: 2px;
+}

@@ -1,0 +1,13 @@
+- const b21="<th></th><th>구래리차고지</th><th>금성백조예미지</th><th>김포한강3차푸르지오</th><th>구래동주민센터</th><th>구래동주민센터입구.계림M스퀘...</th><th>구래환승센터</th><th>솔터마을입구</th><th>힐스테이트.경남아너스빌</th><th>은여울공원</th><th>한양수자인아파트</th><th>뉴고려병원</th><th>타운하우스</th><th>중흥s클래스후문</th><th>한강센트럴자이</th><th>자이타워</th><th>김포경찰서후문</th><th>장곡</th><th>천등고개</th><th>고촌</th><th>평교다리</th><th>개화역광역환승센터</th><th>개화검문소</th><th>개화파출소</th><th>방화중학교</th><th>롯데몰.김포공항</th><th>김포공항국제선(2번홈)</th><th>한국공항공사</th><th>김포공항국내선(2번홈)</th><th>공항동(미정차)</th><th>김포공항입구(미정차)</th><th>방화중학교</th><th>방화동도시개발11단지</th><th>개화역광역환승센터</th><th>평교다리</th><th>고촌</th><th>천등고개</th><th>장곡</th><th>김포경찰서후문</th><th>자이타워</th><th>한강센트럴자이</th><th>중흥s클래스후문</th><th>고창마을.반도유보라후문</th><th>뉴고려병원.이니스더원</th><th>한양수자인아파트</th><th>은여울공원</th><th>힐스테이트.경남아너스빌</th><th>솔터마을입구</th><th>구래환승센터</th><th>구래동주민센터입구.계림M스퀘...</th><th>구래동주민센터</th><th>김포한강3차푸르지오</th><th>금성백조예미지</th><th>구래리차고지(미정차)</th>";
+table
+    tr
+        !=b21
+    include htmldata/bus-232000095.html
+script.
+    let turnpoint=document.getElementsByTagName('tr');
+    for(let i in turnpoint){
+        for(let j=21;j<=33;j++){
+            turnpoint.item(i).children[j].style.backgroundColor='#f3f6f6';
+        }
+        turnpoint.item(i).children[28].style.backgroundColor='#e0e6e6';
+    }

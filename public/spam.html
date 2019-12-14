@@ -1,0 +1,135 @@
+<!-- 구글링 : html 모바일
+스펨은 주로 낮에 오니까 배경을 밝게 해도 될거 같음. 2018-06-18
+모바일용의 코드를 집어넣음 2018-06-18
+입력한 전화번호를 저장하게함. 2018-06-25
+ -->
+<style>
+
+#isspam input, #isspam button, #notice{
+color: black;
+opacity: 1;
+font-size: 20px;
+}
+input{display:none;border-radius: 10px;}
+.isspam, .new_search_box_button, .primary-button {display:inline-block;}
+button, .new_search_box_button, .primary-button {cursor:pointer;border-radius: 10px;padding: 10px 10px;}
+#nums p {
+padding: 0px;
+margin: 1px;
+font-size: 20px;
+}
+a.page{
+font-size: 20px;
+}
+</style>
+<!-- start of missed-call.com spam number search form-->
+
+<div id='isspam' onload="onloadthis();"  onunload="onunloadthis()">
+<p id="notice">팝업 차단 때문에 일일히 버튼을 눌러야됨</p>
+<br>
+<input style="width:80%;" type="text" class="isspam" name="whoscall" value="" title="전화번호" pattern=".{4,}" oninput="inputon(this)"/>
+<br>
+<br>
+<button onclick=gobutton()>whoscall</button>
+<br>
+<br>
+
+<form action="http://www.missed-call.com/" method="get" class="missed_call_tight" target="asdfasdfsafaf" onsubmit="onsubmithis()">
+<table class="missed_call_tight" cellspacing="0" cellpadding="0"><tr>
+<td class="missed_call_form_querybox_bg" align="left">
+<input class="missed_call_form_querybox" name="q" maxlength="20" type="text" title="스팸으로 의심되는 전화번호를 넣고 엔터를 누르세요" pattern=".{4,}" oninput="inputon(this)"/>
+</td>
+<td>
+<input type="submit" value="missed-call" class="new_search_box_button"   />
+<input type="hidden" name="v" value="1j"/>
+</td></tr>
+</table>
+</form>
+<!--iframe class="missedcall" name="missed_call_window" src="about:blank" onload="onload_missedcall(this)"></iframe-->
+
+<br>
+<form action="https://www.thecall.co.kr/bbs/board.php" class="fsearch2" name="fsearch2" method="get" target="dsjaklfasdf" onsubmit="onsubmithis()">
+			      <input type="hidden" name="bo_table" value="phone">
+			      <input type="hidden" name="sca" value="">
+			      <input type="hidden" name="sop" value="and">
+			      <input type="hidden" name="sfl" value="wr_subject">			                      
+			  		<input type="tel" name="stx" class="stx" maxlength="20" itemname="검색어" pattern=".{4,}" title="최소 4자리 이상 입력해주세요." value="" oninput="inputon(this)">
+			  		<input type="submit" value="the call" class="primary-button">
+			  	</form>
+
+<!--iframe class="thecall" name="thecall" src="about:blank" ></iframe-->
+<div id="nums"></div>
+</div>
+<script type="text/javascript">
+
+function supportstorage(){
+    return (typeof(Storage) !== "undefined")
+}
+function aaaaaa(a){
+    nums=document.getElementById("nums")
+    nums.innerHTML="<p>"+a.toString()+"</p>"+nums.innerHTML //가장 최근이 위로
+}
+if(supportstorage()){
+    t=window.localStorage.getItem("stp0099221")
+    if(null!=t){
+        t=JSON.parse(t)
+        if( Array.isArray(t) ){
+            stp0099221=t
+            stp0099221.forEach(aaaaaa)
+        }
+    }
+}
+
+function addnumber(number){
+    if( stp0099221.includes(number.toString()) )
+        return false
+    stp0099221.push(number.toString())
+    aaaaaa(number)
+    if( stp0099221.length>20 ){
+        //제일 오래된거 삭제
+        stp0099221.shift()
+        nums=document.getElementById("nums")
+        nums.removeChild(nums.lastElementChild) 
+    }
+    return true
+}
+
+function onunloadthis(){
+    if(supportstorage()){
+        //console.log("a")
+        window.localStorage.setItem("stp0099221",JSON.stringify(stp0099221))
+    }
+}
+</script>
+<script type="text/javascript">
+stp0099221=[]
+
+function onloadthis(){
+document.getElementsByClassName("isspam")[0].focus()
+}
+
+function onsubmithis(){
+    number=document.getElementsByClassName('isspam')[0].value
+    addnumber(number)
+}
+
+//whoscall
+function openwhoscall(){
+    number=document.getElementsByClassName('isspam')[0].value
+    if(number.length>4){
+        window.open("https://whoscall.com/ko-KR/kr/"+number.toString()+"/")        
+    }
+    addnumber(number)
+}
+function gobutton(){
+openwhoscall()
+}
+
+function inputon(t){
+t.value=t.value.replace(/[^0-9]/g, '');
+document.getElementsByClassName('isspam')[0].value=t.value;
+document.getElementsByClassName('missed_call_form_querybox')[0].value=t.value;
+document.getElementsByClassName('stx')[0].value=t.value;
+}
+
+</script>    

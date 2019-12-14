@@ -1,0 +1,42 @@
+- var route={};
+- route[21]='(김포-김포공항)';
+- route[7000]='(김포-서울)';
+- route['M6117']='(김포-서울)';
+- route['8600']='(김포-서울)';
+- route['M6427']='(김포-서울)';
+- route['6427']='(김포-서울)';
+doctype html
+html    
+    head
+        include gtag.html
+        meta(charset='UTF-8')
+        link(rel='stylesheet', href='/stylesheets/busloc.css')        
+        script(src='/javascripts/busloc.js' defer)
+        title #{title}
+    body
+        case query.bus
+            when '21'
+                p.big #{query.bus}번
+                p #{route[21]}
+                include bus/bus_21.pug
+            when '7000'
+                p.big #{query.bus}번
+                p #{route[7000]}
+                include bus/bus_7000.pug
+            when 'M6117'
+                p.big #{query.bus}번
+                p #{route['M6117']}
+                include bus/bus_m6117.pug
+            when '8600'
+                p.big #{query.bus}번
+                p #{route['8600']}
+                include bus/bus_8600.pug
+            default
+                p.big 번호를 선택
+        each bus in ['21','7000','M6117','8600']
+            p.big
+                a(href='?bus='+bus) #{bus}번 #{route[bus]}
+        p.big
+            a(href='/') main
+        a(href="http://www.gbis.go.kr") 경기도 제공
+        

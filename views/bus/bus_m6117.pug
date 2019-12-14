@@ -1,0 +1,13 @@
+- const bm6117="<th></th><th>구래환승센터</th><th>솔터마을입구(미정차)</th><th>힐스테이트.경남아너스빌</th><th>뉴고려병원</th><th>뉴고려병원(미정차)</th><th>초당마을.주공아파트</th><th>반도유보라2차</th><th>풍경마을</th><th>김포한강신도시IC(미정차)</th><th>한강시네폴리스IC(미정차)</th><th>신곡IC(미정차)</th><th>88JC(미정차)</th><th>가양대교남단(미정차)</th><th>성산대교남단(미정차)</th><th>양화대교남단(미정차)</th><th>여의하류IC(미정차)</th><th>양화대교남단(미정차)</th><th>합정역(중)</th><th>홍대입구역(중)</th><th>신촌오거리.현대백화점(중)</th><th>신촌오거리.2호선신촌역(중)</th><th>충정로역</th><th>서울역</th><th>염천교사거리(미정차)</th><th>충정로역2호선</th><th>신촌오거리.2호선신촌역(중)</th><th>신촌오거리.현대백화점(중)</th><th>홍대입구역(중)</th><th>합정역(중)</th><th>성산대교남단(미정차)</th><th>가양대교남단(미정차)</th><th>88JC(미정차)</th><th>신곡IC(미정차)</th><th>한강시네폴리스IC(미정차)</th><th>풍경마을</th><th>반도유보라2차</th><th>신영아파트.초당마을</th><th>뉴고려병원.이니스더원</th><th>힐스테이트.경남아너스빌</th><th>구래환승센터</th>";
+table
+    tr
+        !=bm6117
+    include htmldata/bus-232000071.html
+script.
+    let turnpoint=document.getElementsByTagName('tr');
+    for(let i in turnpoint){
+        for(let j=18;j<=29;j++){
+            turnpoint.item(i).children[j].style.backgroundColor='#f3f6f6';
+        }
+        turnpoint.item(i).children[23].style.backgroundColor='#e0e6e6';
+    }

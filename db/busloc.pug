@@ -1,0 +1,34 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(name="format-detection" content="telephone=no")
+        style.
+            table {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+
+            table th, table td {
+                border: 1px solid black;
+            }
+    body
+        table
+            -// const rr=JSON.parse(ret);
+            - const rr=ret;
+            - const tt=buss;
+            tr
+                for i in tt
+                    th #{i}
+            for row in rr
+                tr
+                    for col in row
+                        - let f=0;
+                        - f=(typeof({})==typeof(col))?1:0;
+                        td
+                            if f
+                                p.remainSeatCnt #{col.remainseatcnt}
+                                p.plateNo #{col.plateno}
+                            else
+                                p #{col}

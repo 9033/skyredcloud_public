@@ -1,0 +1,100 @@
+extends layout
+
+block content
+  style.
+      body {
+          background-color: SteelBlue    ;
+      }
+      .topdiv{
+          width:90%;/*device-width*/
+          max-width: 600px;
+          border-radius: 10px;
+          padding: 10px 10px;
+          margin:auto;
+          background-color:rgba(0,0,0,0.1);
+      }
+      
+      .mtitle{
+          color:skyBlue;
+          text-shadow: 0.5px 0.5px black;
+          opacity: 1;
+          font-size: 40px;
+          margin:0px;
+      }
+      button {                
+          cursor:pointer;                
+      }
+  style.
+      /*spam div*/
+      #spam{
+          /*display:none;*/
+      }
+  div(id='spam' class='topdiv')
+      p.mtitle 모르는 번호?
+      include ../public/spam.html
+  br
+  style.
+      /*links div*/
+      #links{                
+          color:black;
+          size:5px;
+          padding: 10px 10px;                
+      }
+      .page button {
+          font-size:20px;
+          margin:5px;
+      }
+  div(id='links' class='topdiv')
+      p.mtitle sitemap
+      br
+      a.page(href='self-intro.html')
+          button 글에서 단어 바꾸기
+      br
+      a.page(href='qrcode.html')
+          button qrcode generator
+      br
+      a.page(href='busseat')
+          button 시간대별 버스 자리
+      br
+      a.page(href='buslocs')
+          button 시간대별 버스 자리 (db)
+      br
+      a.page(href='about')
+          button about skyred.cloud
+  br
+  style.
+      /*etc div*/
+      #etc .icon{
+          width:30px;                
+          padding: 0px 0px;
+      }
+      #etc button{
+          margin-right:5px;
+      }
+  div(id='etc' class='topdiv')
+      p.mtitle my pages
+      br            
+      - var etcs={};
+      - //etcs['facebook']="https://facebook.com/jk423";
+      - //etcs['twitter']="https://twitter.com/jk423";
+      - //etcs['instagram']="https://www.instagram.com/0___0__0_0__0/";
+      - //etcs['github']="https://github.com/9033";
+      - etcs['github page']="https://9033.github.io";
+      - //etcs['reddit']="https://9033.github.io";
+      - //etcs['imgur']="https://9033.github.io";
+      - //etcs['tumblr']="https://9033.github.io";
+      - //etcs['youtube']="https://9033.github.io";
+      - //etcs['twitch']="https://9033.github.io";
+      - //etcs['google+']="https://9033.github.io";
+      - //https://kr.diablo3.com/ko/profile/mbin-3755/career
+      - //pixiv
+      - //pinterest
+
+      each v, i in etcs
+          a.etc(href=v)
+              button
+                  - var icon='icons/'+i+'.ico';
+                  img.icon(src=icon)
+      a.etc(href='/')
+          button
+              img.icon(src='icons/my.ico')

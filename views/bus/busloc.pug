@@ -1,0 +1,156 @@
+doctype html
+html    
+    head
+        include ../gtag.html
+        meta(charset='UTF-8')
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        link(rel='stylesheet', href='/stylesheets/busloc.css')
+        title #{title}
+        script(src='/javascripts/busloc.js' defer)
+        style.
+            table.calender td.data_y{
+                background-color:ghostwhite;
+                cursor:pointer;
+            }
+            table.calender td.data_y a{
+                width:100%;
+            }
+            table.calender td.data_n{
+                color:#666;                
+            }
+            td.arrow{
+                cursor:pointer;
+            }
+    body
+        h1=title
+        h2=routename
+    
+        table.calender
+        br
+        h3 #{date[0]}-#{date[1]}-#{date[2]}
+        table.buslocs
+            - const rr=ret;
+            - const tt=buss;//stations
+            tr
+                for i in tt
+                    th #{i}
+            for row in rr
+                tr
+                    for col in row
+                        - let f=0;
+                        - f=(typeof({})==typeof(col))?1:0;
+                        td
+                            if f
+                                p.remainSeatCnt #{col.remainseatcnt}
+                                p.plateNo #{col.plateno}
+                            else
+                                p #{col}
+        script='let s='+bust[0]+';'+'let e='+bust[1]+';'+'let turn='+bust[2]+';'
+        script='let y='+date[0]+';'+'let m='+date[1]+';'+'let d='+date[2]+';'
+        script.
+            let turnpoint=document.querySelectorAll('table.buslocs tr');
+            for(let i in turnpoint){
+                for(let j=s;j<=e;j++){
+                    turnpoint.item(i).children[j].style.backgroundColor='#f3f6f6';
+                }
+                turnpoint.item(i).children[turn].style.backgroundColor='#e0e6e6';
+            }
+
+            //retdates(2018,1,0) -> 2018,0,31 (2018-01-31)
+            function retdates(y,m,d){
+                let t=new Date(y,m-1,d);
+                return [t.getFullYear(),t.getMonth()+1,t.getDate()];
+            }
+
+            function mxhr(method,url,send,headers={}){
+                return new Promise((res,rej)=>{
+                    let xhr=new XMLHttpRequest();
+                    xhr.onload=()=>(xhr.status==200||xhr.status==201)?res(xhr):rej(xhr);
+                    xhr.onerror=()=>rej(xhr);
+                    xhr.open(method,url);        
+                    for(let v in headers){            
+                        xhr.setRequestHeader(v,headers[v]);
+                    }
+                    xhr.send(send);
+                });
+            }
+
+            function drawcal(tablecal,y,m){
+                mxhr('GET',location.origin+'/buslocs/xx'+'?y='+y+'&m='+m,'')
+                .then(r=>{
+                    //해당하는 년-월의 각 날짜마다 해당 노선의 자료가 있는지 없는지 받음.
+                    drawcalender(tablecal,y,m,JSON.parse(r.responseText));
+                })
+                .catch(e=>{
+                    console.error(e);
+                });                
+            }
+
+            function clickdayoncal(t){
+                //t 밑에 node를 클릭하는 이벤트를 발생시킴
+                //- console.log(t);
+                let e=document.createEvent('MouseEvent');
+                e.initMouseEvent(type='click');
+                t.firstChild.dispatchEvent(e);
+            }
+
+            function drawcalender(tablecal,y,m,cnts){
+                const w=['일','월','화','수','목','금','토'];//요일
+                const days=[31,(new Date(y,3-1,0)).getDate(),31,30,31,30,31,31,30,31,30,31];//각 달의 마지막날
+
+                let day=new Date(y,m-1,1);
+                let t='';
+                let wday=0;
+                t+=`<tr>`;
+                if(day<=new Date(2018,8-1,1)){
+                    t+=`<td></td>`;
+                }
+                else{
+                    t+=`<td class='arrow' onclick='[y,m,d]=retdates(y,m-1,d);drawcal(tablecal,y,m);'>⬅</td>`;
+                }
+                t+=`<td colspan=5><p style='width: 100%;text-align: center;'>${y} ${m}</p></td>
+                <td class='arrow' onclick='[y,m,d]=retdates(y,m+1,d);drawcal(tablecal,y,m);'>➡</td>
+                </tr>`;
+                //요일
+                t+='<tr>';
+                for(let i=0;i<7;i++){
+                    t+=`<td>${w[i]}</td>`;
+                }
+                t+='</tr>';
+                //1일이 속한 주.
+                t+='<tr>';
+                for(let i=0;i<day.getDay();i++){
+                    t+='<td></td>';
+                    wday++;
+                }
+                //
+                for(let i=0;i<days[m-1];i++){                    
+                    if(0<cnts[i]){
+                        //데이터가 있으면 링크를 생성.
+                        t+=`<td class='data_y' onclick='clickdayoncal(this)'><a href='${location.pathname}?y=${y}&m=${m}&d=${i+1}'>${i+1}</a></td>`;
+                    }
+                    else {
+                        t+=`<td class='data_n'>${i+1}</td>`;
+                    }
+                    
+                    wday++;
+                    if(wday==7){
+                        wday=0;
+                        t+='</tr><tr>';
+                    }
+                }
+                //마지막 날 부터 같은주 끝까지
+                if(0<wday){
+                    for(;wday<7;wday++){
+                        t+=`<td></td>`;
+                    }
+                }
+                t+='</tr>';
+                tablecal.innerHTML=t;
+            }
+
+            let tablecal=document.querySelector('table.calender');
+            drawcal(tablecal,y,m);
+
+        a(href="http://www.gbis.go.kr") 경기도 제공
+        

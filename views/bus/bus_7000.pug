@@ -1,0 +1,11 @@
+- const b7000="<th></th><th>구래리차고지</th><th>금성백조예미지</th><th>김포한강3차푸르지오</th><th>한가람마을우미린.호수이편한세...</th><th>구래환승센터</th><th>솔터마을입구</th><th>힐스테이트.경남아너스빌</th><th>은여울공원</th><th>수자인.호반아파트</th><th>모아미래도</th><th>운양.용화사IC(미정차)</th><th>김포한강신도시IC(미정차)</th><th>한강시네폴리스IC(미정차)</th><th>신곡IC(미정차)</th><th>88JC(미정차)</th><th>가양대교남단(미정차)</th><th>성산대교남단(미정차)</th><th>당산역</th><th>당산역</th><th>성산대교남단(미정차)</th><th>가양대교남단(미정차)</th><th>88JC(미정차)</th><th>신곡IC(미정차)</th><th>한강시네폴리스IC(미정차)</th><th>김포한강신도시IC(미정차)</th><th>운양.용화사IC(미정차)</th><th>모아미래도</th><th>수자인.호반아파트</th><th>은여울공원</th><th>힐스테이트.경남아너스빌</th><th>솔터마을입구</th><th>구래환승센터</th><th>호수마을이편한세상.한가람우미...</th><th>김포한강3차푸르지오</th><th>금성백조예미지</th><th>구래리차고지(미정차)</th>";
+table
+    tr
+        !=b7000
+    include htmldata/bus-232000092.html
+script.
+    let turnpoint=document.getElementsByTagName('tr');
+    for(let i in turnpoint){
+        turnpoint.item(i).children[18].style.backgroundColor='#e0e6e6';
+        turnpoint.item(i).children[19].style.backgroundColor='#f3f6f6';
+    }

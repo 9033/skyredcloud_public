@@ -1,0 +1,13 @@
+- const b8600="<th></th><th>휴먼시아9단지</th><th>김포한강7로(미정차)</th><th>한가람마을우미린.호수이편한세...</th><th>구래환승센터</th><th>솔터마을입구</th><th>힐스테이트.경남아너스빌</th><th>뉴고려병원</th><th>우미린.반도유보라아파트</th><th>초당마을.주공아파트</th><th>은혜교회</th><th>청송2.3단지</th><th>청송1단지.중흥S클래스</th><th>장기사거리.수정마을</th><th>걸포삼거리.하이마트앞</th><th>북변환승센터.구터미널</th><th>풍년마을.김포고(직행)</th><th>사우고교.김포시청(직행)</th><th>선수동</th><th>고촌</th><th>고촌IC(미정차)</th><th>88JC(미정차)</th><th>가양대교남단(미정차)</th><th>양화교(미정차)</th><th>당산역</th><th>여의도환승센터(2번승강장)</th><th>마포역(중)</th><th>공덕역(중)</th><th>충정로역(중)</th><th>서대문역사거리(중)</th><th>경희궁앞(중)</th><th>광화문</th><th>시청.서소문청사</th><th>충정로역(미정차)</th><th>애오개역(미정차)</th><th>공덕역(중)</th><th>마포역(중)</th><th>여의도환승센터(3번승강장)</th><th>의원회관앞교차로(미정차)</th><th>영등포전화국교차로(미정차)</th><th>당산역</th><th>염창JC(미정차)</th><th>가양대교남단(미정차)</th><th>88JC(미정차)</th><th>고촌</th><th>선수동</th><th>사우고.김포시청</th><th>풍년마을.김포고(걸포사거리방...</th><th>북변환승센터.구터미널</th><th>걸포오스타파라곤아파트</th><th>장기사거리.전원마을</th><th>청송1단지.중흥S클래스</th><th>청송2.3단지</th><th>신영아파트.초당마을</th><th>반도유보라.우미린아파트</th><th>뉴고려병원.이니스더원</th><th>힐스테이트.경남아너스빌</th><th>솔터마을입구</th><th>구래환승센터</th><th>호수마을이편한세상.한가람우미...</th><th>이편한세상.한강아이파크</th>";
+table
+    tr
+        !=b8600
+    include htmldata/bus-232000047.html
+script.
+    let turnpoint=document.getElementsByTagName('tr');
+    for(let i in turnpoint){
+        for(let j=24;j<=40;j++){
+            turnpoint.item(i).children[j].style.backgroundColor='#f3f6f6';
+        }
+        turnpoint.item(i).children[32].style.backgroundColor='#e0e6e6';
+    }

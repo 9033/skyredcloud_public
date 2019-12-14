@@ -1,0 +1,125 @@
+﻿<html>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127408957-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-127408957-2');
+</script>
+
+<meta charset="UTF-8">
+<script src='qrcode.canvas.js' ></script>
+<head>
+	<style>
+		div.main{
+			width:90%;/*device-width*/
+			max-width: 600px;
+			border-radius: 10px;
+			padding: 10px 10px;
+			margin:auto;
+		}
+		button {                
+			cursor:pointer;
+			border-radius: 10px;
+			font-size: 20px;                
+			padding:10px;
+		}
+		#placeHolder {
+			margin: 50px;
+		}
+		textarea{
+			padding: 5px 5px;
+			border-radius: 10px;        
+	    }    
+
+	</style>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+	<div class='main'>
+<textarea id="qrstring" rows="10" cols="30"></textarea>
+<button onclick='__show_qrcode()' >QR code</button>
+<div id="placeHolder" ></div>
+</div>
+
+<script type="text/javascript">
+/*
+해당 qrcode 라이브러리에서는 svg, table, img태그를 이용해서 결과값을 html코드로 만들어서 문자열로 출력. innerHTML 을 이용해서 결과를 받게 되어있다.
+canvas태그는 htm코드로 출력을 하면 qrcode가 출력이 되지 않아서 innerHTML대신 appendChild를 이용해서 결과를 받게 함. 17-11-09
+*/
+/*
+한글 깨지는거 수정
+검색 해보다가 utf-8을 아스키로 바꾸는 방법으로 시도.
+qr코드는 따로 코드페이지를 지정할 수 없다. 그래서 utf-8을 바이트로 변환. 맞는 언어로 읽어야됨.
+결론 : 2시간동안 코드 5줄 추가
+18-04-07
+*/
+
+function __show_qrcode(){
+	var qrstring = document.getElementById('qrstring').value
+		
+	var typeNumber = 0; /* 0=auto */
+	var errorCorrectionLevel = 'H';
+	var qr = qrcode(typeNumber, errorCorrectionLevel);
+	//qr.addData('1QA9xo4wZRx6tc1w3cAEpH2647qSQTUg68');
+	
+	/*utf-8 to ascii bytes*/
+	a = qrcode.stringToBytesFuncs["UTF-8"](qrstring);
+	str = "";
+	for (i in a){
+		str+=String.fromCharCode(a[i]);
+	}
+	
+	qr.addData( str );
+	//qr.addData(a+b);
+	//qr.addData(encodeURIComponent(qrstring));
+	qr.make();
+
+	
+	var createCanvasTag = function(cellSize, margin){
+		cellSize = cellSize || 2;
+		margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+		
+		var size = qr.getModuleCount() * cellSize + margin * 2;
+		
+		var canvas = document.getElementById('qrcode')
+		
+		if(canvas == null){
+			canvas = document.createElement('canvas')
+			canvas.id = "qrcode"
+		}
+		
+		canvas.width = size;
+		canvas.height = size;
+		
+		
+		var ctx2d = canvas.getContext("2d")
+        
+        qr.renderTo2dContext(ctx2d,cellSize)
+        /*
+		for (r = 0; r < qr.getModuleCount(); r += 1) {
+			for (c = 0; c < qr.getModuleCount(); c += 1) {
+				if (qr.isDark(r, c) ) {
+					ctx2d.fillRect(c*cellSize+margin,r*cellSize+margin,cellSize,cellSize)
+				}
+				else {
+				}
+			}
+		}
+		*/
+		return canvas;
+	}
+    
+    //document.getElementById('placeHolder').appendChild(qr.renderTo2dContext(ctx2d,5)) ;
+    
+	document.getElementById('placeHolder').appendChild(createCanvasTag(5,10)) ;
+	
+}
+</script>
+
+</body>
+</html>
